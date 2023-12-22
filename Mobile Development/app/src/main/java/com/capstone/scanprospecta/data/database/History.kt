@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 
-
 @Entity (tableName = "history")
 data class History(
 

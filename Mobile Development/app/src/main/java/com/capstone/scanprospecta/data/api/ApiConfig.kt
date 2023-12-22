@@ -1,5 +1,6 @@
 package com.capstone.scanprospecta.data.api
 
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

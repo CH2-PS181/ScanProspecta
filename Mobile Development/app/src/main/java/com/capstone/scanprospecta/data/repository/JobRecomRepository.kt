@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.capstone.scanprospecta.data.ResultState
 import com.capstone.scanprospecta.data.api.ApiService
-import com.capstone.scanprospecta.data.response.DetailItem
 import com.capstone.scanprospecta.data.response.JobRecomResponse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -20,7 +19,7 @@ class JobRecomRepository (
     private val _jobRecomResult = MutableLiveData<ResultState<JobRecomResponse>>()
     val jobRecomResult: LiveData<ResultState<JobRecomResponse>> = _jobRecomResult
 
-    suspend fun postJobRecom(imageFile: File, data: List<DetailItem?>?) {
+    suspend fun postJobRecom(imageFile: File, data: List<String>) {
         _jobRecomResult.postValue(ResultState.loading)
 
         val textPlainMediaType = "text/plain".toMediaType()

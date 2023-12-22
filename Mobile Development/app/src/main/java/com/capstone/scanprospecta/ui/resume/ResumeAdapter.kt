@@ -26,7 +26,9 @@ class ResumeAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val resume = list[position]
-        holder.bind(resume)
+        if (resume != null) {
+            holder.bind(resume)
+        }
         holder.itemView.setOnClickListener {
             val intentDetail = Intent(holder.itemView.context, DetailResumeActivity::class.java)
             intentDetail.putExtra("detail", resume.resumeId)

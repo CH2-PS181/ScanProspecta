@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.scanprospecta.R
+import com.capstone.scanprospecta.data.preference.UserModel
 import com.capstone.scanprospecta.data.response.Message
 import com.capstone.scanprospecta.databinding.FragmentConsultationBinding
 import com.capstone.scanprospecta.databinding.FragmentHomeBinding

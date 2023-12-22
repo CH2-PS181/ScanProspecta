@@ -2,24 +2,28 @@ package com.capstone.scanprospecta.ui.resume
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.capstone.scanprospecta.data.ResultState
 import com.capstone.scanprospecta.data.preference.UserPreference
+import com.capstone.scanprospecta.data.repository.JobRecomRepository
 import com.capstone.scanprospecta.data.repository.ResumeRepository
 import com.capstone.scanprospecta.data.response.DataItem
 import com.capstone.scanprospecta.di.Injection
+import com.capstone.scanprospecta.ui.result.ResultViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import java.io.File
 
 class ResumeViewModel(
     private val repository: ResumeRepository,
     private val preference: UserPreference
 ) : ViewModel() {
 
-    fun getResumeExample(token: String): LiveData<ResultState<List<DataItem>>> {
-        return repository.getResumeExample(token)
-    }
+    fun getResumeExample(token: String)= repository.getResumeExample(token)
 
     fun checkTokenAvailable(): LiveData<String> {
         return preference.getSession()

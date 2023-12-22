@@ -12,7 +12,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.scanprospecta.data.ResultState
-import com.capstone.scanprospecta.data.response.DetailItem
 import com.capstone.scanprospecta.databinding.ActivityResultBinding
 import com.capstone.scanprospecta.ui.camera.CameraActivity
 import com.capstone.scanprospecta.utils.AppExecutors
@@ -51,22 +50,25 @@ class ResultActivity : AppCompatActivity() {
 
     private fun setupView() {
         binding.rvJob.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        viewModel.jobRecomResult.observe(this, Observer { it ->
-            when (it) {
+        viewModel.jobRecomResult.observe(this, Observer { result ->
+            when (result) {
                 is ResultState.loading -> {
                     showLoading(true)
                 }
                 is ResultState.success -> {
                     showLoading(false)
-                    val jobRecom = it.data.detail
-                    Log.d("ResultActivity", "JobRecom: $jobRecom")
-                    setJobRecom(jobRecom)
+                    val jobRecom = result.data.predictions
+                    if (jobRecom != null) {
+                        Log.d("ResultActivity", "JobRecom: $jobRecom")
+                        setJobRecom(jobRecom)
+                    }
                 }
                 is ResultState.error -> {
-                    val error = it.error
+                    val error = result.error
                     showToast(error)
                     showLoading(false)
                 }
+
                 else -> {}
             }
         })
@@ -87,15 +89,17 @@ class ResultActivity : AppCompatActivity() {
         binding.ivResult.setImageBitmap(result)
     }
 
-    private fun setJobRecom(data: List<DetailItem?>?) {
+    private fun setJobRecom(data: List<String>) {
         if (imageUri != null) {
             val imageFile = uriToFile(imageUri, this)
 
-            val adapter = ResultAdapter()
-            binding.rvJob.adapter = adapter
+            if (imageFile != null) {
+                val adapter = ResultAdapter(this, data)
+                binding.rvJob.adapter = adapter
 
-            val result = viewModel.postJobRecom(imageFile, data)
-            return result
+                val result = viewModel.postJobRecom(imageFile, data)
+                return result
+            }
         }
     }
 

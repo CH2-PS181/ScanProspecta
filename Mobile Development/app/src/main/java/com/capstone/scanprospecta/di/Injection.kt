@@ -8,6 +8,7 @@ import com.capstone.scanprospecta.data.preference.UserPreference
 import com.capstone.scanprospecta.data.preference.dataStore
 import com.capstone.scanprospecta.data.repository.JobRecomRepository
 import com.capstone.scanprospecta.data.repository.ResumeRepository
+import com.capstone.scanprospecta.utils.AppExecutors
 
 object Injection {
     fun provideUserRepository(context: Context): UserRepository {
@@ -23,6 +24,7 @@ object Injection {
 
     fun provideResumeRepository(): ResumeRepository {
         val apiService = apiServiceEndpoint1
-        return ResumeRepository.getInstance(apiService)
+        val appExecutors = AppExecutors()
+        return ResumeRepository.getInstance(apiService, appExecutors)
     }
 }
